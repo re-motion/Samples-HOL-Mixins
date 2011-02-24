@@ -1,7 +1,6 @@
-﻿
-using System;
+﻿using System;
 
-namespace HOLApp.BasicImplementation
+namespace EqualsShowCase.BasicImplementation
 {
   public class Address : IEquatable<Address>
   {
@@ -21,7 +20,7 @@ namespace HOLApp.BasicImplementation
       if (other == null)
         return false;
 
-      if (this.GetType () != other.GetType ())
+      if (GetType () != other.GetType ())
         return false;
 
       return Street == other.Street && StreetNumber == other.StreetNumber &&

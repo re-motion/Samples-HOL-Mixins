@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HOLApp", "HOLApp\HOLApp.csproj", "{A6C83FB1-20C3-4084-A21E-AE1043B06AB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EqualsShowCase", "HOLApp\EqualsShowCase.csproj", "{A6C83FB1-20C3-4084-A21E-AE1043B06AB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

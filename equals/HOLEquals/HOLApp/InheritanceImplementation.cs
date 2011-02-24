@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace HolApp.BaseClassEquals
+namespace EqualsShowCase.InheritanceImplementation
 {
   public class EquatableByValues<T> : IEquatable<T>
      where T : class
@@ -41,6 +41,8 @@ namespace HolApp.BaseClassEquals
     }
   }
 
+  //// Problem 1: can't have more than one base class like this, e.g. 
+  //// public class Address : EquatableByValues<Address>, DisposableBase
   public class Address : EquatableByValues<Address>
   {
     public string City;
@@ -48,20 +50,11 @@ namespace HolApp.BaseClassEquals
     public string Country;
   }
 
+  //// Problem 2: can't derive class hierarchies from base class
+  //// public class StreetAddress : Address // implements IEquatable<Address> instead of IEquatable<StreetAddress>!
   public class StreetAddress : Address
   {
     public string Street;
     public string StreetNumber;
   }
 }
-
-
-
-
-//// Problem 1: can't have more than one base class like this, e.g. 
-//// public class Address : EquatableByValues<Address>, DisposableBase
-
-//// Problem 2: can't derive class hierarchies from base class
-//public class StreetAddress : Address // implements IEquatable<Address> instead of IEquatable<StreetAddress>!
-//{
-//}

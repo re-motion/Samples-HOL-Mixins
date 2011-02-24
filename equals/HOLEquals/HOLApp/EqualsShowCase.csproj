@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseClassEquals.cs" />
+    <Compile Include="InheritanceImplementation.cs" />
     <Compile Include="BasicImplementation.cs" />
     <Compile Include="MixinImplementation.cs" />
     <Compile Include="Program.cs" />

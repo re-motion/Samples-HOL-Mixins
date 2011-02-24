@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Reflection;
 
-namespace HOLApp.UtilityImplementation
+namespace EqualsShowCase.UtilityImplementation
 {
-  public class ComparyUtility
+  public class CompareUtility
   {
     public static bool FieldEquals (object a, object b)
     {
-      if ((a == null) != (b == null))
+      if ((a == null) && (b == null))
+        return true;
+
+      if ((a == null) || (b == null))
         return false;
 
       if (a.GetType () != b.GetType ())
@@ -28,32 +31,38 @@ namespace HOLApp.UtilityImplementation
     }
   }
 
-    public class Address : IEquatable<Address>
+  public class Address : IEquatable<Address>
+  {
+    protected delegate bool EqualCheck (object a, object b);
+    public string City;
+    public string ZipCode;
+    public string Country;
+
+    protected virtual EqualCheck GetComparison ()
     {
-      public string City;
-      public string ZipCode;
-      public string Country;
-
-      public override bool Equals (object obj)
-      {
-        return Equals (obj as Address);
-      }
-
-      public bool Equals (Address other)
-      {
-        return HOLApp.UtilityImplementation.ComparyUtility.FieldEquals(this, other);
-     }
-
-      public override int GetHashCode ()
-      {
-        throw new NotImplementedException();
-      }
+      return EqualsShowCase.UtilityImplementation.CompareUtility.FieldEquals;
     }
 
-    public class StreetAddress : Address
+    public override bool Equals (object obj)
     {
-      public string Street;
-      public string StreetNumber;
+      return Equals (obj as Address);
+    }
+
+    public bool Equals (Address other)
+    {
+      return GetComparison () (this, other);
+    }
+
+    public override int GetHashCode ()
+    {
+      return City.GetHashCode () ^ ZipCode.GetHashCode () ^ Country.GetHashCode ();
     }
   }
+
+  public class StreetAddress : Address
+  {
+    public string Street;
+    public string StreetNumber;
+  }
+}
 
