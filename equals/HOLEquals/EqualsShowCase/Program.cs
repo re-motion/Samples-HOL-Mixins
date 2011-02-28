@@ -1,4 +1,5 @@
 ﻿using System;
+using EqualsShowCase.MixinImplementation;
 using Remotion.Mixins;
 using Remotion.Reflection;
 
@@ -8,18 +9,29 @@ namespace HOLApp
   {
     static void Main (string[] args)
     {
-      //BasicImplementation();
+      // BasicImplementation();
       //InheritanceImplementation();
-      UtilityImplementation();
-      //MixinImplementation();
+      // UtilityImplementation();
+      StrategyImplementation();
+      // MixinImplementation();
 
       Console.ReadKey();
+    }
+
+    private static void StrategyImplementation ()
+    {
+      EqualsShowCase.StrategyImplementation.StreetAddress streetaddress3 = new EqualsShowCase.StrategyImplementation.StreetAddress ();
+      EqualsShowCase.StrategyImplementation.StreetAddress streetaddress4 = new EqualsShowCase.StrategyImplementation.StreetAddress ();
+      streetaddress3.Street = "Test";
+      streetaddress4.Street = "Test2";
+      Console.WriteLine ("Strategy Implementation StreetAddress: Both instances have the same values: {0}", Equals (streetaddress3, streetaddress4));
     }
 
     static void BasicImplementation ()
     {
       EqualsShowCase.BasicImplementation.Address address1 = new EqualsShowCase.BasicImplementation.Address ();
       EqualsShowCase.BasicImplementation.Address address2 = new EqualsShowCase.BasicImplementation.Address ();
+
       Console.WriteLine ("Basic Implementation: Both instances have the same values: {0}", Equals (address1, address2));
     }
 
@@ -50,9 +62,14 @@ namespace HOLApp
 
     static void MixinImplementation ()
     {
-      HOLApp.MixinImplementation.StreetAddress mixedAddress1 = ObjectFactory.Create<HOLApp.MixinImplementation.StreetAddress> (ParamList.Create (1010, "Wien", "Stephansplatz", "1"));
-      HOLApp.MixinImplementation.StreetAddress mixedAddress2 = ObjectFactory.Create<HOLApp.MixinImplementation.StreetAddress> (ParamList.Empty);
+      EqualsShowCase.MixinImplementation.StreetAddress mixedAddress1 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress> (ParamList.Create (1010, "Wien", "Stephansplatz", "1"));
+      EqualsShowCase.MixinImplementation.StreetAddress mixedAddress2 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress>(ParamList.Create(1010, "Wien", "Stephansplatz", "1"));
       Console.WriteLine ("Mixed Implementation StreetAddress: Both instances have the same values: {0}", Equals (mixedAddress1, mixedAddress2));
+
+      EqualsShowCase.MixinImplementation.StreetAddress mixedAddress3 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress> (ParamList.Create (1010, default (string), "Stephansplatz", "1"));
+      EqualsShowCase.MixinImplementation.StreetAddress mixedAddress4 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress> (ParamList.Create (1010, new City().Name = "Wien", "Stephansplatz", "1"));
+      Console.WriteLine ("Mixed Implementation StreetAddress: Both instances have the same values: {0}", Equals (mixedAddress1, mixedAddress3));
+      Console.WriteLine ("Mixed Implementation StreetAddress: Both instances have the same values: {0}", Equals (mixedAddress1, mixedAddress4));
     }
   }
 }

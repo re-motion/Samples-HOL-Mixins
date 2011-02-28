@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace EqualsShowCase.UtilityImplementation
 {
-  public class CompareUtility
+  public class EquateUtility
   {
-    public static bool FieldEquals (object a, object b)
+    public static bool EquateByValues (object a, object b)
     {
       if ((a == null) && (b == null))
         return true;
@@ -29,19 +29,20 @@ namespace EqualsShowCase.UtilityImplementation
 
       return true;
     }
+    public static int GetHashCode (object a)
+    {
+      int i = 0;
+      foreach (FieldInfo f in a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+        i = i ^ f.GetHashCode ();
+      return i;
+    }
   }
 
   public class Address : IEquatable<Address>
   {
-    protected delegate bool EqualCheck (object a, object b);
     public string City;
     public string ZipCode;
     public string Country;
-
-    protected virtual EqualCheck GetComparison ()
-    {
-      return EqualsShowCase.UtilityImplementation.CompareUtility.FieldEquals;
-    }
 
     public override bool Equals (object obj)
     {
@@ -50,12 +51,12 @@ namespace EqualsShowCase.UtilityImplementation
 
     public bool Equals (Address other)
     {
-      return GetComparison () (this, other);
+      return EqualsShowCase.UtilityImplementation.EquateUtility.EquateByValues (this, other);
     }
 
     public override int GetHashCode ()
     {
-      return City.GetHashCode () ^ ZipCode.GetHashCode () ^ Country.GetHashCode ();
+      return EqualsShowCase.UtilityImplementation.EquateUtility.GetHashCode (this);
     }
   }
 
@@ -65,4 +66,3 @@ namespace EqualsShowCase.UtilityImplementation
     public string StreetNumber;
   }
 }
-

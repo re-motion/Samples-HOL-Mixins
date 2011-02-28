@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Remotion.Mixins;
 
-namespace HOLApp.MixinImplementation
+namespace EqualsShowCase.MixinImplementation
 {
   public class EquatableByValuesMixin<[BindToTargetType]T> : Mixin<T>, IEquatable<T>
      where T : class
@@ -34,13 +33,24 @@ namespace HOLApp.MixinImplementation
     [OverrideTarget]
     public new bool Equals (object other)
     {
-      return ((IEquatable<T>)this).Equals (other as T);
+      return Equals (other as T);
     }
 
     [OverrideTarget]
     public new int GetHashCode ()
     {
-      return s_targetFields.Aggregate (0, (current, t) => current ^ t.GetValue (Target).GetHashCode ());
+      int i = 0;
+      foreach (FieldInfo f in s_targetFields)
+        i = i ^ f.GetHashCode();
+      return i;
+    }
+  }
+
+  public class EquatableByValuesAttribute : UsesAttribute
+  {
+    public EquatableByValuesAttribute ()
+      : base (typeof (EquatableByValuesMixin<>))
+    {
     }
   }
 
@@ -96,11 +106,13 @@ namespace HOLApp.MixinImplementation
     public int POBox;
   }
 
-  public class EquatableByValuesAttribute : UsesAttribute
+
+  [EquatableByValuesAttribute]
+  public class PhoneNumber
   {
-    public EquatableByValuesAttribute ()
-      : base (typeof (EquatableByValuesMixin<>))
-    {
-    }
+    public int CountryCode;
+    public int AreaCode;
+    public int Number;
+    public int? Extension;
   }
 }

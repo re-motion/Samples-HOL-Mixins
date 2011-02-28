@@ -52,6 +52,7 @@
     <Compile Include="MixinImplementation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StrategyImplementation.cs" />
     <Compile Include="UtilityImplementation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
