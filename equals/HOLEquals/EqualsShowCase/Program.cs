@@ -10,10 +10,10 @@ namespace HOLApp
     static void Main (string[] args)
     {
       // BasicImplementation();
-      //InheritanceImplementation();
+      // InheritanceImplementation();
       // UtilityImplementation();
-      StrategyImplementation();
-      // MixinImplementation();
+      // StrategyImplementation();
+      MixinImplementation();
 
       Console.ReadKey();
     }
@@ -63,7 +63,7 @@ namespace HOLApp
     static void MixinImplementation ()
     {
       EqualsShowCase.MixinImplementation.StreetAddress mixedAddress1 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress> (ParamList.Create (1010, "Wien", "Stephansplatz", "1"));
-      EqualsShowCase.MixinImplementation.StreetAddress mixedAddress2 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress>(ParamList.Create(1010, "Wien", "Stephansplatz", "1"));
+      EqualsShowCase.MixinImplementation.StreetAddress mixedAddress2 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress> (ParamList.Create(1010, "Wien", "Stephansplatz", "1"));
       Console.WriteLine ("Mixed Implementation StreetAddress: Both instances have the same values: {0}", Equals (mixedAddress1, mixedAddress2));
 
       EqualsShowCase.MixinImplementation.StreetAddress mixedAddress3 = ObjectFactory.Create<EqualsShowCase.MixinImplementation.StreetAddress> (ParamList.Create (1010, default (string), "Stephansplatz", "1"));

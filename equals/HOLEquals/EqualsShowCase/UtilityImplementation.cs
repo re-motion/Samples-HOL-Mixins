@@ -16,12 +16,12 @@ namespace EqualsShowCase.UtilityImplementation
       if (a.GetType () != b.GetType ())
         return false;
 
-      FieldInfo[] s_targetFields = a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+      FieldInfo[] targetFields = a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
       
-      for (int i = 0; i < s_targetFields.Length; i++)
+      for (int i = 0; i < targetFields.Length; i++)
       {
-        object thisFieldValue = s_targetFields[i].GetValue (a);
-        object otherFieldValue = s_targetFields[i].GetValue (b);
+        object thisFieldValue = targetFields[i].GetValue (a);
+        object otherFieldValue = targetFields[i].GetValue (b);
 
         if (!Equals (thisFieldValue, otherFieldValue))
           return false;
@@ -31,10 +31,13 @@ namespace EqualsShowCase.UtilityImplementation
     }
     public static int GetHashCode (object a)
     {
-      int i = 0;
-      foreach (FieldInfo f in a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
-        i = i ^ f.GetHashCode ();
-      return i;
+      int j = 0;
+      FieldInfo[] targetFields = a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+      for (int i = 0; i < targetFields.Length; i++)
+      {
+        j = j ^ targetFields[i].GetValue(a).GetHashCode();
+      }
+      return j;
     }
   }
 

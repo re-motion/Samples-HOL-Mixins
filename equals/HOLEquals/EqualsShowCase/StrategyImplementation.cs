@@ -83,7 +83,4 @@ namespace EqualsShowCase.StrategyImplementation
     public string Street;
     public string StreetNumber;
   }
-
-
 }
-

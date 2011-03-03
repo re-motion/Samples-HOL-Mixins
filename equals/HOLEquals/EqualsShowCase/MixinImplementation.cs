@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using Remotion.Mixins;
+using Remotion.Reflection;
 
 namespace EqualsShowCase.MixinImplementation
 {
+  // public class EquatableByValuesMixin<T> : Mixin<T>, IEquatable<T>
   public class EquatableByValuesMixin<[BindToTargetType]T> : Mixin<T>, IEquatable<T>
      where T : class
   {
@@ -46,15 +48,17 @@ namespace EqualsShowCase.MixinImplementation
     }
   }
 
-  public class EquatableByValuesAttribute : UsesAttribute
+  public class EquatableByValues : UsesAttribute
   {
-    public EquatableByValuesAttribute ()
+    public EquatableByValues ()
       : base (typeof (EquatableByValuesMixin<>))
     {
     }
   }
 
-  [EquatableByValuesAttribute]
+  
+  // [Uses(typeof (EquatableByValuesMixin<Address>))]
+  [EquatableByValues]
   public abstract class Address
   {
     protected Address ()
@@ -97,6 +101,11 @@ namespace EqualsShowCase.MixinImplementation
 
   public class POBoxAddress : Address
   {
+    public static POBoxAddress NewObject (int zipCode, string city, int poBox)
+    {
+      return ObjectFactory.Create<POBoxAddress>(ParamList.Create(zipCode, city, poBox));
+    }
+
     public POBoxAddress (int zipCode, string city, int poBox)
       : base (zipCode, city)
     {
@@ -106,8 +115,7 @@ namespace EqualsShowCase.MixinImplementation
     public int POBox;
   }
 
-
-  [EquatableByValuesAttribute]
+  [EquatableByValues]
   public class PhoneNumber
   {
     public int CountryCode;
