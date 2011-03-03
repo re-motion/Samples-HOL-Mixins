@@ -5,8 +5,9 @@ namespace EqualsShowCase.UtilityImplementation
 {
   public class EquateUtility
   {
-    public static bool EquateByValues (object a, object b)
+    public static bool EqualsByValues (object a, object b)
     {
+      #region //...
       if ((a == null) && (b == null))
         return true;
 
@@ -17,7 +18,6 @@ namespace EqualsShowCase.UtilityImplementation
         return false;
 
       FieldInfo[] targetFields = a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-      
       for (int i = 0; i < targetFields.Length; i++)
       {
         object thisFieldValue = targetFields[i].GetValue (a);
@@ -28,16 +28,20 @@ namespace EqualsShowCase.UtilityImplementation
       }
 
       return true;
+      #endregion
     }
-    public static int GetHashCode (object a)
+
+    public static int GetHashCodeByValues (object obj)
     {
+      #region //...
+      FieldInfo[] targetFields = obj.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
       int j = 0;
-      FieldInfo[] targetFields = a.GetType().GetFields (BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-      for (int i = 0; i < targetFields.Length; i++)
+      foreach (var f in targetFields)
       {
-        j = j ^ targetFields[i].GetValue(a).GetHashCode();
+        j ^= f.GetValue(obj).GetHashCode();
       }
       return j;
+      #endregion
     }
   }
 
@@ -54,12 +58,12 @@ namespace EqualsShowCase.UtilityImplementation
 
     public bool Equals (Address other)
     {
-      return EqualsShowCase.UtilityImplementation.EquateUtility.EquateByValues (this, other);
+      return EquateUtility.EqualsByValues (this, other);
     }
 
     public override int GetHashCode ()
     {
-      return EqualsShowCase.UtilityImplementation.EquateUtility.GetHashCode (this);
+      return EquateUtility.GetHashCodeByValues (this);
     }
   }
 
