@@ -6,7 +6,6 @@ using Remotion.Reflection;
 namespace EqualsShowCase.MixinImplementation
 {
 
-// TODO: use this in print version: public class EquatableByValuesMixin<T> : Mixin<T>, IEquatable<T>
 public class EquatableByValuesMixin<[BindToTargetType]T> : Mixin<T>, IEquatable<T>
     where T : class
 {
@@ -49,7 +48,6 @@ public class EquatableByValuesMixin<[BindToTargetType]T> : Mixin<T>, IEquatable<
   }
 }
 
-// TODO: remove in print version
 public class EquatableByValues : UsesAttribute
 {
   public EquatableByValues ()
@@ -58,8 +56,7 @@ public class EquatableByValues : UsesAttribute
   }
 }
 
-  
-// TODO: use this in print version: [Uses(typeof (EquatableByValuesMixin<Address>))]
+
 [EquatableByValues]
 public abstract class Address
 {
@@ -73,7 +70,6 @@ public abstract class Address
     City = city;
   }
 
-  // TODO: remove in print version
   // This alternative constructor shows the problem of runtime overloads. Assuming you create an Address using the statements
   //   string city;
   //   ObjectFactory.Create (1010, city)
@@ -91,7 +87,6 @@ public abstract class Address
   public string City;
 }
 
-// TODO: remove in print version
 public class City
 {
   public string Name;
@@ -99,13 +94,11 @@ public class City
 
 public class StreetAddress : Address
 {
-  // TODO: remove in print version
   public static StreetAddress NewObject (int zipCode, string city, string street, string streetNumber)
   {
     return ObjectFactory.Create<StreetAddress> (true, ParamList.Create (zipCode, city, street, streetNumber));
   }
 
-  // TODO: public in print version
   protected StreetAddress (int zipCode, string city, string street, string streetNumber)
     : base (zipCode, city)
   {
@@ -119,13 +112,11 @@ public class StreetAddress : Address
 
 public class POBoxAddress : Address
 {
-  // TODO: remove in print version
   public static POBoxAddress NewObject (int zipCode, string city, int poBox)
   {
     return ObjectFactory.Create<POBoxAddress> (true, ParamList.Create (zipCode, city, poBox));
   }
 
-  // TODO: public in print version
   protected POBoxAddress (int zipCode, string city, int poBox)
     : base (zipCode, city)
   {
@@ -135,7 +126,6 @@ public class POBoxAddress : Address
   public int POBox;
 }
 
-// todo: remove in print version
 [EquatableByValues]
 public class PhoneNumber
 {

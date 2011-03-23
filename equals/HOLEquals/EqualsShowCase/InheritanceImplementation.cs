@@ -44,7 +44,6 @@ public class EquatableByValues<T> : IEquatable<T>
   }
 }
 
-// TODO: remove comment for printed version
 //// Problem 1: can't have more than one base class like this, e.g. 
 //// public class Address : EquatableByValues<Address>, DisposableBase
 public class Address : EquatableByValues<Address>
@@ -54,7 +53,6 @@ public class Address : EquatableByValues<Address>
   public string Country;
 }
 
-// TODO: remove comment for printed version
 //// Problem 2: can't derive class hierarchies from base class
 //// public class StreetAddress : Address // implements IEquatable<Address> instead of IEquatable<StreetAddress>!
 public class StreetAddress : Address
